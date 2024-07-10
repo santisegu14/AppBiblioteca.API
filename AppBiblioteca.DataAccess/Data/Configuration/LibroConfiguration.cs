@@ -15,9 +15,13 @@ namespace AppBiblioteca.DataAccess.Data.Configuration
         {
 
             builder.HasKey(e => e.ID);
+            builder.Property(e => e.Titulo).IsRequired().HasMaxLength(255);
+            builder.Property(e => e.AnioPublicacion).IsRequired();
+            builder.Property(e => e.AutorID).IsRequired();
+            builder.Property(e => e.CategoriaID).IsRequired();
 
-
-
+            builder.HasOne(e => e.Autor).WithMany().HasForeignKey(e => e.AutorID);
+            builder.HasOne(e => e.Categoria).WithMany().HasForeignKey(e => e.CategoriaID);
         }
     }
 }

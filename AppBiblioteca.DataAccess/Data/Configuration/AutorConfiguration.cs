@@ -15,9 +15,9 @@ namespace AppBiblioteca.DataAccess.Data.Configuration
         {
 
             builder.HasKey(e => e.ID);
-            builder.Property(e => e.Nombre).HasMaxLength(255);
-            builder.Property(e => e.Apellido).HasMaxLength(255);
-            builder.Property(e => e.Nacionalidad).HasMaxLength(255);
+            builder.Property(e => e.Nombre).IsRequired().HasMaxLength(255);
+            builder.Property(e => e.Apellido).IsRequired().HasMaxLength(255);
+            builder.Property(e => e.Nacionalidad).IsRequired().HasMaxLength(255);
 
 
 

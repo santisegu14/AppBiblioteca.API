@@ -11,7 +11,7 @@ namespace AppBiblioteca.Models.Models
     public class Libro
     {
         [Key]
-        public int ID { get; set; } // Clave primaria
+        public int ID { get; set; } 
         public string Titulo { get; set; }
         [ForeignKey("Autor")]
         public int AutorID { get; set; } 

@@ -46,9 +46,9 @@ namespace AppBiblioteca.DataAccess.Migrations
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Titulo = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    AnioPublicacion = table.Column<int>(type: "int", nullable: false),
                     AutorID = table.Column<int>(type: "int", nullable: false),
-                    CategoriaID = table.Column<int>(type: "int", nullable: false),
-                    AnioPublicacion = table.Column<int>(type: "int", nullable: false)
+                    CategoriaID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -73,9 +73,9 @@ namespace AppBiblioteca.DataAccess.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    LibroID = table.Column<int>(type: "int", nullable: false),
                     FechaPrestamo = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    FechaDevolucion = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    FechaDevolucion = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LibroID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

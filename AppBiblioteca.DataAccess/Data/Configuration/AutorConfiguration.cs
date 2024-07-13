@@ -18,9 +18,6 @@ namespace AppBiblioteca.DataAccess.Data.Configuration
             builder.Property(e => e.Nombre).IsRequired().HasMaxLength(255);
             builder.Property(e => e.Apellido).IsRequired().HasMaxLength(255);
             builder.Property(e => e.Nacionalidad).IsRequired().HasMaxLength(255);
-
-
-
         }
     }
 }

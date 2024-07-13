@@ -21,7 +21,9 @@ namespace AppBiblioteca.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Prestamo>>> GetPrestamos()
         {
-            var lista = await _db.Prestamos.ToListAsync();
+            var lista = await _db.Prestamos
+                .Include(p=> p.Libro)
+                .ToListAsync();
             _response.Resultado = lista;
             _response.Mensaje = "Listado de prestamos";
             return Ok(_response);
@@ -42,6 +44,16 @@ namespace AppBiblioteca.API.Controllers
         [HttpPost]
         public async Task<ActionResult<Prestamo>> PostPrestamo([FromBody] Prestamo prestamo)
         {
+            var libroExistente = await _db.Libros.FindAsync(prestamo.LibroID);
+            if (libroExistente == null)
+            {
+                // Si el libro no existe, devuelve un error o crea un nuevo libro según tus necesidades
+                return BadRequest("El libro especificado no existe.");
+            }
+
+            // Asigna el libro existente al préstamo
+            prestamo.Libro = libroExistente;
+            
             await _db.Prestamos.AddAsync(prestamo);
             await _db.SaveChangesAsync();
             return CreatedAtRoute("GetPrestamo", new { id = prestamo.ID }, prestamo); //Status Code = 201
@@ -54,6 +66,13 @@ namespace AppBiblioteca.API.Controllers
             {
                 return BadRequest("Id Prestamo no coincide");
             }
+            // Verifica si el libro asociado al préstamo existe
+            var libroExistente = await _db.Libros.FindAsync(prestamo.LibroID);
+            if (libroExistente == null)
+            {
+                return NotFound("El libro asociado al préstamo no existe.");
+            }
+
             _db.Update(prestamo);
             await _db.SaveChangesAsync();
             return Ok(prestamo);

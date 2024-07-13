@@ -17,8 +17,8 @@ namespace AppBiblioteca.DataAccess.Data.Configuration
             builder.HasKey(e => e.ID);
             builder.Property(e => e.LibroID).IsRequired();
             builder.Property(e => e.FechaPrestamo).IsRequired();
-            builder.Property(e => e.FechaDevolucion).IsRequired();
-            
+            builder.Property(e => e.FechaDevolucion);
+
             builder.HasOne(e => e.Libro).WithMany().HasForeignKey(e => e.LibroID);
 
         }

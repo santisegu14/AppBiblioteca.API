@@ -16,9 +16,6 @@ namespace AppBiblioteca.DataAccess.Data.Configuration
 
             builder.HasKey(e => e.ID);
             builder.Property(e => e.Nombre).IsRequired().HasMaxLength(255);
-
-
-
         }
     }
 }

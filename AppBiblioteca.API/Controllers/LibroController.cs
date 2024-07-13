@@ -21,7 +21,10 @@ namespace AppBiblioteca.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Libro>>> GetLibros()
         {
-            var lista = await _db.Libros.ToListAsync();
+            var lista = await _db.Libros
+                .Include(p => p.Autor)
+                .Include(p => p.Categoria)
+                .ToListAsync();
             _response.Resultado = lista;
             _response.Mensaje = "Listado de libros";
             return Ok(_response);
@@ -42,6 +45,31 @@ namespace AppBiblioteca.API.Controllers
         [HttpPost]
         public async Task<ActionResult<Libro>> PostLibro([FromBody] Libro libro)
         {
+            var autorExistente = await _db.Autores.FindAsync(libro.AutorID);
+            if (autorExistente == null)
+            {
+                // Crea un nuevo autor solo si no existe
+                _db.Autores.Add(libro.Autor);
+            }
+            else
+            {
+                // Asigna el autor existente al libro
+                libro.Autor = autorExistente;
+            }
+
+            var categoriaExistente = await _db.Categorias.FindAsync(libro.CategoriaID);
+            if (categoriaExistente == null)
+            {
+                // Crea un nuevo autor solo si no existe
+                _db.Categorias.Add(libro.Categoria);
+            }
+            else
+            {
+                // Asigna el autor existente al libro
+                libro.Categoria = categoriaExistente;
+            }
+
+
             await _db.Libros.AddAsync(libro);
             await _db.SaveChangesAsync();
             return CreatedAtRoute("GetLibro", new { id = libro.ID }, libro); //Status Code = 201
@@ -54,6 +82,20 @@ namespace AppBiblioteca.API.Controllers
             {
                 return BadRequest("Id Libro no coincide");
             }
+
+            var autorExistente = await _db.Autores.FindAsync(libro.AutorID);
+            if (autorExistente == null)
+            {
+                return NotFound("El autor asociado al libro no existe.");
+            }
+
+            // Verifica si la categoría asociada al libro existe
+            var categoriaExistente = await _db.Categorias.FindAsync(libro.CategoriaID);
+            if (categoriaExistente == null)
+            {
+                return NotFound("La categoría asociada al libro no existe.");
+            }
+
             _db.Update(libro);
             await _db.SaveChangesAsync();
             return Ok(libro);

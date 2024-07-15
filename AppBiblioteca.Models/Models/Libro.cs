@@ -17,13 +17,15 @@ namespace AppBiblioteca.Models.Models
     
         public int AnioPublicacion { get; set; }
 
-
         [ForeignKey("Autor")]
         public int AutorID { get; set; }
-        public Autor Autor { get; set; }
 
         [ForeignKey("Categoria")]
         public int CategoriaID { get; set; }
+
+        [JsonIgnore]
+        public Autor Autor { get; set; }
+        [JsonIgnore]
         public Categoria Categoria { get; set; }
 
 

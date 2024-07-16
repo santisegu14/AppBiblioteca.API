@@ -18,9 +18,11 @@ namespace AppBiblioteca.DataAccess.Data.Configuration
             builder.Property(e => e.LibroID).IsRequired();
             builder.Property(e => e.FechaPrestamo).IsRequired();
             builder.Property(e => e.FechaDevolucion);
+            builder.Property(e => e.UsuarioID).IsRequired();
+
 
             builder.HasOne(e => e.Libro).WithMany().HasForeignKey(e => e.LibroID);
-
+            builder.HasOne(e => e.Usuario).WithMany().HasForeignKey(e => e.UsuarioID);
         }
     }
 }

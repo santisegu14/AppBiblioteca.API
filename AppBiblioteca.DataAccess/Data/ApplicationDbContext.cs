@@ -21,6 +21,7 @@ namespace AppBiblioteca.DataAccess.Data
         public DbSet<Categoria> Categorias { get; set; }
         public DbSet<Libro> Libros { get; set; }
         public DbSet<Prestamo> Prestamos{ get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelbuilder)
         {
@@ -28,6 +29,7 @@ namespace AppBiblioteca.DataAccess.Data
             modelbuilder.ApplyConfiguration(new CategoriaConfiguration());
             modelbuilder.ApplyConfiguration(new LibroConfiguration());
             modelbuilder.ApplyConfiguration(new PrestamoConfiguration());
+            modelbuilder.ApplyConfiguration(new UsuarioConfiguration());
         }
 
 

@@ -18,7 +18,7 @@ namespace AppBiblioteca.Models.Models
 
         [ForeignKey("Libro")]
         public int LibroID { get; set; }
-        [ForeignKey("Libro")]
+        [ForeignKey("Usuario")]
         public int UsuarioID { get; set; }
 
         [JsonIgnore]

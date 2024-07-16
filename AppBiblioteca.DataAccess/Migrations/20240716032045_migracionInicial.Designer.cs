@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppBiblioteca.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240715230922_migracionInicial")]
+    [Migration("20240716032045_migracionInicial")]
     partial class migracionInicial
     {
         /// <inheritdoc />
@@ -119,11 +119,39 @@ namespace AppBiblioteca.DataAccess.Migrations
                     b.Property<int>("LibroID")
                         .HasColumnType("int");
 
+                    b.Property<int>("UsuarioID")
+                        .HasColumnType("int");
+
                     b.HasKey("ID");
 
                     b.HasIndex("LibroID");
 
+                    b.HasIndex("UsuarioID");
+
                     b.ToTable("Prestamos");
+                });
+
+            modelBuilder.Entity("AppBiblioteca.Models.Models.Usuario", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("Correo")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Usuarios");
                 });
 
             modelBuilder.Entity("AppBiblioteca.Models.Models.Libro", b =>
@@ -153,7 +181,15 @@ namespace AppBiblioteca.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("AppBiblioteca.Models.Models.Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("UsuarioID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Libro");
+
+                    b.Navigation("Usuario");
                 });
 #pragma warning restore 612, 618
         }

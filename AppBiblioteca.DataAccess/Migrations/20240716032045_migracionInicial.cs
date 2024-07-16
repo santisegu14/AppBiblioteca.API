@@ -40,6 +40,20 @@ namespace AppBiblioteca.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Usuarios",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nombre = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Correo = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Usuarios", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Libros",
                 columns: table => new
                 {
@@ -75,7 +89,8 @@ namespace AppBiblioteca.DataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FechaPrestamo = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FechaDevolucion = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    LibroID = table.Column<int>(type: "int", nullable: false)
+                    LibroID = table.Column<int>(type: "int", nullable: false),
+                    UsuarioID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -84,6 +99,12 @@ namespace AppBiblioteca.DataAccess.Migrations
                         name: "FK_Prestamos_Libros_LibroID",
                         column: x => x.LibroID,
                         principalTable: "Libros",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Prestamos_Usuarios_UsuarioID",
+                        column: x => x.UsuarioID,
+                        principalTable: "Usuarios",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -102,6 +123,11 @@ namespace AppBiblioteca.DataAccess.Migrations
                 name: "IX_Prestamos_LibroID",
                 table: "Prestamos",
                 column: "LibroID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Prestamos_UsuarioID",
+                table: "Prestamos",
+                column: "UsuarioID");
         }
 
         /// <inheritdoc />
@@ -112,6 +138,9 @@ namespace AppBiblioteca.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "Libros");
+
+            migrationBuilder.DropTable(
+                name: "Usuarios");
 
             migrationBuilder.DropTable(
                 name: "Autores");

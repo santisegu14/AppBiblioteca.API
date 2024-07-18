@@ -59,7 +59,7 @@ namespace AppBiblioteca.API.Controllers
             return Ok(categoria);
         }
 
-        [HttpDelete("id")]
+        [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteCategoria(int id)
         {
             var categoria = await _db.Categorias.FindAsync(id);

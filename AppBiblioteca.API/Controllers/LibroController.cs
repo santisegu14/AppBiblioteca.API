@@ -101,7 +101,7 @@ namespace AppBiblioteca.API.Controllers
             return Ok(libro);
         }
 
-        [HttpDelete("id")]
+        [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteLibro(int id)
         {
             var libro = await _db.Libros.FindAsync(id);

@@ -22,7 +22,7 @@ namespace AppBiblioteca.API.Controllers
         public async Task<ActionResult<IEnumerable<Prestamo>>> GetPrestamos()
         {
             var lista = await _db.Prestamos
-                .Include(p=> p.Libro)
+                .Include(p => p.Libro)
                 .ToListAsync();
             _response.Resultado = lista;
             _response.Mensaje = "Listado de prestamos";
@@ -53,7 +53,7 @@ namespace AppBiblioteca.API.Controllers
 
             // Asigna el libro existente al préstamo
             prestamo.Libro = libroExistente;
-            
+
             await _db.Prestamos.AddAsync(prestamo);
             await _db.SaveChangesAsync();
             return CreatedAtRoute("GetPrestamo", new { id = prestamo.ID }, prestamo); //Status Code = 201
@@ -78,7 +78,7 @@ namespace AppBiblioteca.API.Controllers
             return Ok(prestamo);
         }
 
-        [HttpDelete("id")]
+        [HttpDelete("{id}")]
         public async Task<ActionResult> DeletePrestamo(int id)
         {
             var prestamo = await _db.Prestamos.FindAsync(id);

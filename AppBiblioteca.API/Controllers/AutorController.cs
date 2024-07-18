@@ -59,7 +59,7 @@ namespace AppBiblioteca.API.Controllers
             return Ok(autor);
         }
 
-        [HttpDelete("id")]
+        [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteAutor(int id)
         {
             var autor = await _db.Autores.FindAsync(id);

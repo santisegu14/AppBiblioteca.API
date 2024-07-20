@@ -1,0 +1,15 @@
+[
+  {
+    "titulo": "Guardian",
+    "anioPublicacion": 2008,
+    "autorID": 1,
+    "categoriaID": 1
+  }
+
+  {
+    "titulo": "Nemesis",
+    "anioPublicacion": 2006,
+    "autorID": 2,
+    "categoriaID": 1
+  }
+]

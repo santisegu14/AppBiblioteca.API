@@ -1,0 +1,21 @@
+version: '3,9'
+services:
+  mssql:
+    hostname: mssql
+    image: mcr.microsoft.com/mssql/server:latest
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "Admin123"
+      MSSQL_PID: "Evaluation"
+    ports:
+      - 1433:1433
+
+
+  AppBiblioteca.API:
+    hostname: AppBiblioteca.API
+    image: appbibliotecaapi:dev
+    depends_on:
+      - mssql
+    ports:
+      - "32776:8080"
+

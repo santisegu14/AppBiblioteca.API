@@ -1,0 +1,14 @@
+[
+  {
+    "fechaPrestamo": "2024-07-20T02:31:17.545Z",
+    "fechaDevolucion": "2024-07-20T02:31:17.545Z",
+    "libroID": 1,
+    "usuarioID": 2
+  }
+  {
+    "fechaPrestamo": "2024-07-20T02:31:17.545Z",
+    "fechaDevolucion": "2024-07-20T02:31:17.545Z",
+    "libroID": 2,
+    "usuarioID": 1
+  }
+]

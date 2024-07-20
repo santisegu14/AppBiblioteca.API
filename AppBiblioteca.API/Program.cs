@@ -1,4 +1,5 @@
 using AppBiblioteca.DataAccess.Data;
+using AppBiblioteca.DataAccess.Inicializador;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
@@ -15,7 +16,9 @@ builder.Services.AddSwaggerGen();
 var connectionString = //Environment.GetEnvironmentVariable("DB_CONNECTION_STRING")??
     builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer("Server = mssql; Database = appBibliotecaDEF; TrustServerCertificate = True; Trusted_Connection = True; MultipleActiveResultSets = true "));
+    options.UseSqlServer(
+        connectionString));
+    //"Server =mssql; Database = appBibliotecaDoc; TrustServerCertificate = True; Trusted_Connection = True; MultipleActiveResultSets = true "));
 
 
 
@@ -36,14 +39,33 @@ app.UseCors(x => x.AllowAnyOrigin()
 
 app.UseAuthorization();
 
-app.MapControllers();
+// Aplicar Migraciones y Datos Iniciales
+/*using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var loggerFactory = services.GetRequiredService<ILoggerFactory>();
 
+    try
+    {
+        var inicializador = services.GetRequiredService<IDbInicializador>();
+        inicializador.Inicializar();
+    }
+    catch (Exception ex)
+    {
+
+        var logger = loggerFactory.CreateLogger<Program>();
+        logger.LogError(ex, "Un Error ocurrio al ejecutar la migracion");
+    }
+}
+*/
+app.MapControllers();
+/*
 var scope = app.Services.CreateScope();
 await Migrations(scope.ServiceProvider);
-
+*/
 
 app.Run();
-
+/*
 async Task Migrations(IServiceProvider servicesProvider)
 {
     var context= servicesProvider.GetService<ApplicationDbContext>();
@@ -52,3 +74,4 @@ async Task Migrations(IServiceProvider servicesProvider)
     context.Database.Migrate();
 
 }
+*/
